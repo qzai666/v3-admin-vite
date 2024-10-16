@@ -1,6 +1,6 @@
-import { type VNode, cloneVNode, createVNode, defineComponent, h, KeepAlive } from "vue"
-import { useRoute } from "vue-router"
-import { useTagsViewStore } from "@/store/modules/tags-view"
+import { type VNode, cloneVNode, createVNode, defineComponent, h, KeepAlive } from 'vue'
+import { useRoute } from 'vue-router'
+import { useTagsViewStore } from '@/stores/tags-view'
 
 interface CompConsumerProps {
   component: VNode
@@ -44,7 +44,7 @@ export const CompConsumer = defineComponent(
           name: routeName,
           setup() {
             return () => node
-          }
+          },
         })
         compMap.set(routeName, Comp)
       }
@@ -52,16 +52,16 @@ export const CompConsumer = defineComponent(
       return createVNode(
         KeepAlive,
         {
-          include: tagsViewStore.cachedViews
+          include: tagsViewStore.cachedViews,
         },
         {
-          default: () => h(Comp)
-        }
+          default: () => h(Comp),
+        },
       )
     }
   },
   {
-    name: "CompConsumer",
-    props: ["component"]
-  }
+    name: 'CompConsumer',
+    props: ['component'],
+  },
 )

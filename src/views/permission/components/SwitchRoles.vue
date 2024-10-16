@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue"
-import { useUserStore } from "@/store/modules/user"
+import { ref, watch } from 'vue'
+import { useUserStore } from '@/stores/user'
 
 const userStore = useUserStore()
 const switchRoles = ref(userStore.roles[0])
-watch(switchRoles, (value) => {
+watch(switchRoles, value => {
   userStore.changeRoles(value)
 })
 </script>

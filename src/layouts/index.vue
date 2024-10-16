@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { computed, watchEffect } from "vue"
-import { storeToRefs } from "pinia"
-import { useSettingsStore } from "@/store/modules/settings"
-import useResize from "./hooks/useResize"
-import { useWatermark } from "@/hooks/useWatermark"
-import { useDevice } from "@/hooks/useDevice"
-import { useLayoutMode } from "@/hooks/useLayoutMode"
-import LeftMode from "./LeftMode.vue"
-import TopMode from "./TopMode.vue"
-import LeftTopMode from "./LeftTopMode.vue"
-import { Settings, RightPanel } from "./components"
-import { getCssVariableValue, setCssVariableValue } from "@/utils"
+import { computed, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useSettingsStore } from '@/stores/settings'
+import useResize from './hooks/useResize'
+import { useWatermark } from '@/hooks/useWatermark'
+import { useDevice } from '@/hooks/useDevice'
+import { useLayoutMode } from '@/hooks/useLayoutMode'
+import LeftMode from './LeftMode.vue'
+import TopMode from './TopMode.vue'
+import LeftTopMode from './LeftTopMode.vue'
+import { Settings, RightPanel } from './components'
+import { getCssVariableValue, setCssVariableValue } from '@/utils'
 
 /** Layout 布局响应式 */
 useResize()
@@ -24,17 +24,17 @@ const { showSettings, showTagsView, showWatermark, showGreyMode, showColorWeakne
 const classes = computed(() => {
   return {
     showGreyMode: showGreyMode.value,
-    showColorWeakness: showColorWeakness.value
+    showColorWeakness: showColorWeakness.value,
   }
 })
 
 //#region 隐藏标签栏时删除其高度，是为了让 Logo 组件高度和 Header 区域高度始终一致
-const cssVariableName = "--v3-tagsview-height"
+const cssVariableName = '--v3-tagsview-height'
 const v3TagsviewHeight = getCssVariableValue(cssVariableName)
 watchEffect(() => {
   showTagsView.value
     ? setCssVariableValue(cssVariableName, v3TagsviewHeight)
-    : setCssVariableValue(cssVariableName, "0px")
+    : setCssVariableValue(cssVariableName, '0px')
 })
 //#endregion
 

@@ -1,12 +1,19 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
-import { useUserStoreHook } from '@/store/modules/user'
 import { ElMessage } from 'element-plus'
 import { get, merge } from 'lodash-es'
 import { getToken } from './cache/cookies'
+import { useUserStore } from '@/stores/user'
+import { createPinia } from 'pinia'
+import { createApp } from 'vue'
+import App from '@/App.vue'
+
+const pinia = createPinia()
+const app = createApp(App)
+app.use(pinia)
 
 /** 退出登录并强制刷新页面（会重定向到登录页） */
 function logout() {
-  useUserStoreHook().logout()
+  useUserStore().logout()
   location.reload()
 }
 
