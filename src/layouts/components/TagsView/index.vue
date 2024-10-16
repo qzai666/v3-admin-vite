@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { getCurrentInstance, onMounted, ref, watch } from "vue"
-import { type RouteLocationNormalizedLoaded, type RouteRecordRaw, RouterLink, useRoute, useRouter } from "vue-router"
-import { type TagView, useTagsViewStore } from "@/store/modules/tags-view"
-import { usePermissionStore } from "@/store/modules/permission"
-import { useRouteListener } from "@/hooks/useRouteListener"
-import path from "path-browserify"
-import ScrollPane from "./ScrollPane.vue"
-import { Close } from "@element-plus/icons-vue"
+import { getCurrentInstance, onMounted, ref, watch } from 'vue'
+import { type RouteLocationNormalizedLoaded, type RouteRecordRaw, RouterLink, useRoute, useRouter } from 'vue-router'
+import { type TagView, useTagsViewStore } from '@/store/modules/tags-view'
+import { usePermissionStore } from '@/store/modules/permission'
+import { useRouteListener } from '@/hooks/useRouteListener'
+import path from 'path-browserify'
+import ScrollPane from './ScrollPane.vue'
+import { Close } from '@element-plus/icons-vue'
 
 const instance = getCurrentInstance()
 const router = useRouter()
@@ -40,16 +40,16 @@ const isAffix = (tag: TagView) => {
 }
 
 /** 筛选出固定标签页 */
-const filterAffixTags = (routes: RouteRecordRaw[], basePath = "/") => {
+const filterAffixTags = (routes: RouteRecordRaw[], basePath = '/') => {
   const tags: TagView[] = []
-  routes.forEach((route) => {
+  routes.forEach(route => {
     if (isAffix(route)) {
       const tagPath = path.resolve(basePath, route.path)
       tags.push({
         fullPath: tagPath,
         path: tagPath,
         name: route.name,
-        meta: { ...route.meta }
+        meta: { ...route.meta },
       })
     }
     if (route.children) {
@@ -80,7 +80,7 @@ const addTags = (route: RouteLocationNormalizedLoaded) => {
 /** 刷新当前正在右键操作的标签页 */
 const refreshSelectedTag = (view: TagView) => {
   tagsViewStore.delCachedView(view)
-  router.replace({ path: "/redirect" + view.path, query: view.query })
+  router.replace({ path: '/redirect' + view.path, query: view.query })
 }
 
 /** 关闭当前正在右键操作的标签页 */
@@ -104,7 +104,7 @@ const closeOthersTags = () => {
 const closeAllTags = (view: TagView) => {
   tagsViewStore.delAllVisitedViews()
   tagsViewStore.delAllCachedViews()
-  if (affixTags.some((tag) => tag.path === route.path)) return
+  if (affixTags.some(tag => tag.path === route.path)) return
   toLastView(tagsViewStore.visitedViews, view)
 }
 
@@ -116,11 +116,11 @@ const toLastView = (visitedViews: TagView[], view: TagView) => {
     router.push(fullPath)
   } else {
     // 如果 TagsView 全部被关闭了，则默认重定向到主页
-    if (view.name === "Dashboard") {
+    if (view.name === 'Dashboard') {
       // 重新加载主页
-      router.push({ path: "/redirect" + view.path, query: view.query })
+      router.push({ path: '/redirect' + view.path, query: view.query })
     } else {
-      router.push("/")
+      router.push('/')
     }
   }
 }
@@ -149,14 +149,14 @@ const closeMenu = () => {
   visible.value = false
 }
 
-watch(visible, (value) => {
-  value ? document.body.addEventListener("click", closeMenu) : document.body.removeEventListener("click", closeMenu)
+watch(visible, value => {
+  value ? document.body.addEventListener('click', closeMenu) : document.body.removeEventListener('click', closeMenu)
 })
 
 onMounted(() => {
   initTags()
   /** 监听路由变化 */
-  listenerRouteChange(async (route) => {
+  listenerRouteChange(async route => {
     addTags(route)
   }, true)
 })
